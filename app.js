@@ -4,17 +4,20 @@ const dotenv = require("dotenv");
 dotenv.config();
 const healthcheck = require("./routes/helthchecker");
 const { default: mongoose } = require("mongoose");
+const registerRotes = require("./routes/AuthRoutes/RegisterRoutes");
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static("./public"));
+app.use("/healthcheck", healthcheck);
 
 app.get("/", (req, res) => {
   res.send("hello server");
 });
-app.use("/healthcheck", healthcheck);
 
+// routes
+app.post("/register", registerRotes);
 const port = process.env.PORT || 5500;
 
 app.listen(port, () => {
