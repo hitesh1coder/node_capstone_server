@@ -20,8 +20,24 @@ app.get("/", (req, res) => {
 // routes
 app.post("/register", registerRoute);
 app.post("/login", loginRoute);
-const port = process.env.PORT || 5500;
 
+// Error Handling middlewere
+app.use((req, res, next) => {
+  const err = new Error("Not Found");
+  err.status = 404;
+  next(err);
+});
+app.use((err, req, res, next) => {
+  res.status(err.status || 500);
+  res.json({
+    error: {
+      status: err.status || 500,
+      message: err.message,
+    },
+  });
+});
+
+const port = process.env.PORT || 5500;
 app.listen(port, () => {
   mongoose
     .connect(process.env.MONGODB_PORT, {

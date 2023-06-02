@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const User = require("../../models/userModel");
 
-const loginRoute = async (req, res) => {
+const loginRoute = async (req, res, next) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
