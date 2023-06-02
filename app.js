@@ -4,7 +4,8 @@ const dotenv = require("dotenv");
 dotenv.config();
 const healthcheck = require("./routes/helthchecker");
 const { default: mongoose } = require("mongoose");
-const registerRotes = require("./routes/AuthRoutes/RegisterRoutes");
+const registerRoute = require("./routes/AuthRoutes/RegisterRoutes");
+const loginRoute = require("./routes/AuthRoutes/LoginRout");
 
 const app = express();
 
@@ -17,7 +18,8 @@ app.get("/", (req, res) => {
 });
 
 // routes
-app.post("/register", registerRotes);
+app.post("/register", registerRoute);
+app.post("/login", loginRoute);
 const port = process.env.PORT || 5500;
 
 app.listen(port, () => {
