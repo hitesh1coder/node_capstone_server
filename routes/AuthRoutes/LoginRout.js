@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const User = require("../../models/userModel");
+const jwt = require("jsonwebtoken");
 
 const loginRoute = async (req, res, next) => {
   const { email, password } = req.body;
@@ -9,9 +10,13 @@ const loginRoute = async (req, res, next) => {
     if (user) {
       let matchPassword = await bcrypt.compare(password, user.password);
       if (matchPassword) {
+        const jwtToken = jwt.sign({ email }, process.env.JWT_SECRECT_KEY, {
+          expiresIn: 6000,
+        });
         res.status(200).send({
           status: "success",
           message: "user loged in successfully",
+          token: jwtToken,
         });
       } else {
         res

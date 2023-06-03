@@ -3,10 +3,10 @@ const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 dotenv.config();
 const healthcheck = require("./routes/helthchecker");
-const { default: mongoose } = require("mongoose");
+const mongoose = require("mongoose");
 const registerRoute = require("./routes/AuthRoutes/RegisterRoutes");
 const loginRoute = require("./routes/AuthRoutes/LoginRout");
-
+const addjobroutes = require("./routes/AddJobRout/AddJobRout");
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -20,6 +20,7 @@ app.get("/", (req, res) => {
 // routes
 app.post("/register", registerRoute);
 app.post("/login", loginRoute);
+app.post("/add-job", addjobroutes);
 
 // Error Handling middlewere
 app.use((req, res, next) => {

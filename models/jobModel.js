@@ -8,7 +8,7 @@ const Job = mongoose.model("Job", {
   jobtype: Array,
   workplace: Array,
   location: String,
-  jondesc: String,
+  jobdesc: String,
   aboutcampany: String,
   skills: Array,
 });
