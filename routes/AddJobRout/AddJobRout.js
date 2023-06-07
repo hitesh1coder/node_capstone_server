@@ -14,6 +14,7 @@ const addjobroutes = async (req, res) => {
     aboutcampany,
     skills,
   } = req.body;
+  const skillsArray = skills.split(",");
   try {
     if (
       !campanyname ||
@@ -25,7 +26,7 @@ const addjobroutes = async (req, res) => {
       !location ||
       !jobdesc ||
       !aboutcampany ||
-      !skills
+      !skillsArray.length < 0
     ) {
       return res.status(400).json({ msg: "Please fill all fields" });
     }
@@ -46,7 +47,7 @@ const addjobroutes = async (req, res) => {
       location,
       jobdesc,
       aboutcampany,
-      skills,
+      skillsArray,
     });
     res.status(201).json({ message: "SUCCESS", job });
   } catch (error) {
