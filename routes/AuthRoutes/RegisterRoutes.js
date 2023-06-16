@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const dotEnv = require("dotenv");
 dotEnv.config();
 
-const registerRoute = async (req, res, next) => {
+const registerRoute = async (req, res) => {
   const { name, email, mobile, password, terms } = req.body;
   try {
     const user = await User.findOne({ email });
@@ -14,9 +14,9 @@ const registerRoute = async (req, res, next) => {
         message: "this email user already exists",
       });
     }
-    if ((name, email, mobile, password, terms)) {
+    if (name && email && mobile && password && terms) {
       const encryptedPassword = await bcrypt.hash(password, 10);
-      await User.create({
+      const user = await User.create({
         name,
         email,
         password: encryptedPassword,
@@ -32,14 +32,15 @@ const registerRoute = async (req, res, next) => {
       );
       return res.send({
         status: "success",
-        massage: "register successful",
+        message: "register successful",
+        recruiterName: user.name,
         token: jwtToken,
       });
     } else {
       res.send({ status: "FAIL", message: "all fields require" });
     }
   } catch (error) {
-    next(new Error("Something went wrong! Please try after some time."));
+    res.status(500).send({ status: "FAIL", message: "someting went wrong" });
   }
 };
 module.exports = registerRoute;

@@ -14,7 +14,7 @@ const addjobroutes = async (req, res) => {
     aboutcampany,
     skills,
   } = req.body;
-  const skillsArray = skills.split(",");
+  const skillsArray = skills.split(" ");
   try {
     if (
       !campanyname ||
@@ -35,23 +35,26 @@ const addjobroutes = async (req, res) => {
     const token = req.headers.token;
     const decoded = jwt.verify(token, process.env.JWT_SECRECT_KEY);
     const id = decoded.id;
-
-    const job = await Job.create({
-      id,
-      campanyname,
-      logourl,
-      position,
-      salary,
-      jobtype,
-      workplace,
-      location,
-      jobdesc,
-      aboutcampany,
-      skillsArray,
-    });
-    res.status(201).json({ message: "SUCCESS", job });
+    if (decoded) {
+      const job = await Job.create({
+        id,
+        campanyname,
+        logourl,
+        position,
+        salary,
+        jobtype,
+        workplace,
+        location,
+        jobdesc,
+        aboutcampany,
+        skillsArray,
+      });
+      res.status(201).json({ message: "SUCCESS", job });
+    }
   } catch (error) {
-    res.status(500).json({ message: "Please login first", error });
+    res
+      .status(500)
+      .json({ message: "You are not Authorised user! Login again ", error });
   }
 };
 

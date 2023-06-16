@@ -4,9 +4,8 @@ const jwt = require("jsonwebtoken");
 
 const loginRoute = async (req, res, next) => {
   const { email, password } = req.body;
+  const user = await User.findOne({ email });
   try {
-    const user = await User.findOne({ email });
-
     if (user) {
       let matchPassword = await bcrypt.compare(password, user.password);
       if (matchPassword) {
@@ -14,23 +13,26 @@ const loginRoute = async (req, res, next) => {
           expiresIn: 6000,
         });
         res.status(200).send({
-          status: "success",
+          recruiterName: user.name,
           message: "user loged in successfully",
           token: jwtToken,
         });
       } else {
         res
-          .status(500)
-          .send({ status: "failed", message: "password did't matched" });
+          .status(501)
+          .send({ status: "failed", message: "crediancials did't matched" });
       }
     } else {
       res
-        .status(500)
-        .send({ status: "failed", message: "this user is not registered" });
+        .status(502)
+        .send({
+          status: "failed",
+          message: "this email user is not registered",
+        });
     }
   } catch (error) {
     res
-      .status(500)
+      .status(503)
       .send({ status: "failed", message: "incorrect credentials" });
   }
 };
