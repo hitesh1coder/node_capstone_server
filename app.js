@@ -52,14 +52,15 @@ app.use((err, req, res, next) => {
 });
 
 const port = process.env.PORT || 5500;
+mongoose
+  .connect(process.env.MONGODB_PORT, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log(`DB connected`);
+  })
+  .catch((err) => console.log("connection error: " + err));
 app.listen(port, () => {
-  mongoose
-    .connect(process.env.MONGODB_PORT, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    })
-    .then(() => {
-      console.log(`Server running on port ${port} and DB connected`);
-    })
-    .catch((err) => console.log("connection error: " + err));
+  console.log(`listening on port ${port}`);
 });
