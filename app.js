@@ -6,13 +6,13 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const Job = require("./models/jobModel");
 const healthcheck = require("./routes/helthchecker");
-const registerRoute = require("./routes/AuthRoutes/RegisterRoutes");
-const loginRoute = require("./routes/AuthRoutes/LoginRout");
-const addjobroutes = require("./routes/AddJobRout/AddJobRout");
-const filterRoute = require("./routes/FilterRout/filterRoute");
-const jobdetailes = require("./routes/JobDetailsRouts/getjobdetails");
-const authUser = require("./middleware/authmiddleware");
-const editjobroutes = require("./routes/EditJobRout/editjobroute");
+const RegisterController = require("./controller/AuthController/RegisterController");
+const LoginController = require("./controller/AuthController/LoginController");
+const AddjobController = require("./controller/AddJobController/AddjobController");
+const FilterJobController = require("./controller/FilterController/FilterJobController");
+const GetJobDetailController = require("./controller/JobDetailsController/GetJobDetailController");
+const EditJobController = require("./controller/EditJobController/EditJobController");
+const auth = require("./middleware/authmiddleware");
 
 const app = express();
 
@@ -28,12 +28,12 @@ app.get("/", async (req, res) => {
 });
 
 // routes
-app.post("/register", registerRoute);
-app.post("/login", loginRoute);
-app.post("/add-job", addjobroutes);
-app.get("/jobs", filterRoute);
-app.get("/job/:id", jobdetailes);
-app.put("/job/:id", editjobroutes);
+app.post("/register", RegisterController);
+app.post("/login", LoginController);
+app.post("/add-job", AddjobController);
+app.get("/jobs", FilterJobController);
+app.get("/job/:id", GetJobDetailController);
+app.put("/job/:id", EditJobController);
 
 // Error Handling middlewere
 app.use((req, res, next) => {

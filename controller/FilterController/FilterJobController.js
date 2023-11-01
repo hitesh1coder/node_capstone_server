@@ -1,6 +1,6 @@
 const Job = require("../../models/jobModel");
 
-const filterRoute = async (req, res) => {
+const FilterJobController = async (req, res) => {
   try {
     let skills = req.query.skills.split(",") || [];
 
@@ -22,4 +22,4 @@ const filterRoute = async (req, res) => {
     res.status(500).json(error);
   }
 };
-module.exports = filterRoute;
+module.exports = FilterJobController;

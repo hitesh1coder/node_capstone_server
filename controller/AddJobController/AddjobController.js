@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const Job = require("../../models/jobModel");
 
-const addjobroutes = async (req, res) => {
+const AddjobController = async (req, res) => {
   const {
     campanyname,
     logourl,
@@ -58,4 +58,4 @@ const addjobroutes = async (req, res) => {
   }
 };
 
-module.exports = addjobroutes;
+module.exports = AddjobController;

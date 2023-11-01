@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const User = require("../../models/userModel");
 const jwt = require("jsonwebtoken");
 
-const loginRoute = async (req, res, next) => {
+const LoginController = async (req, res, next) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   try {
@@ -23,12 +23,10 @@ const loginRoute = async (req, res, next) => {
           .send({ status: "failed", message: "crediancials did't matched" });
       }
     } else {
-      res
-        .status(502)
-        .send({
-          status: "failed",
-          message: "this email user is not registered",
-        });
+      res.status(502).send({
+        status: "failed",
+        message: "this email user is not registered",
+      });
     }
   } catch (error) {
     res
@@ -37,4 +35,4 @@ const loginRoute = async (req, res, next) => {
   }
 };
 
-module.exports = loginRoute;
+module.exports = LoginController;
