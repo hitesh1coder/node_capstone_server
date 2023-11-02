@@ -5,7 +5,7 @@ dotenv.config();
 const mongoose = require("mongoose");
 const cors = require("cors");
 const Job = require("./models/jobModel");
-const healthcheck = require("./routes/helthchecker");
+const healthcheck = require("./controller/helthchecker");
 const RegisterController = require("./controller/AuthController/RegisterController");
 const LoginController = require("./controller/AuthController/LoginController");
 const AddjobController = require("./controller/AddJobController/AddjobController");
